@@ -9,21 +9,21 @@ const { parseMultipartData, sanitizeEntity } = require("strapi-utils");
 /** Response with the products the user own */
 module.exports = {
   async find(ctx) {
-    let products;
+    let entities;
     if (ctx.query._q) {
-      products = await strapi.services.product.search(ctx.query);
+      entities = await strapi.services.product.search(ctx.query);
     } else {
-      products = await strapi.services.product.find(ctx.query);
+      entities = await strapi.services.product.find(ctx.query);
     }
     const userId = ctx.state.user.id;
-    const ownedProducts = products.filter(
-      (product) => product.user.id === userId
+    const authorizedEntities = entities.filter(
+      (entity) => entity.user.id === userId
     );
-    return ownedProducts.map((entity) => {
+    return authorizedEntities.map((entity) => {
       const product = sanitizeEntity(entity, {
         model: strapi.models.product,
       });
-      if (product.user) {
+      if (entity.user) {
         delete product.user;
         delete product.category;
       }
