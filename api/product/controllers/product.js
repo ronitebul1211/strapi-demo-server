@@ -16,6 +16,18 @@ module.exports = {
       products = await strapi.services.product.find(ctx.query);
     }
     const userId = ctx.state.user.id;
-    return products.filter((product) => product.user.id === userId);
+    const ownedProducts = products.filter(
+      (product) => product.user.id === userId
+    );
+    return ownedProducts.map((entity) => {
+      const product = sanitizeEntity(entity, {
+        model: strapi.models.product,
+      });
+      if (product.user) {
+        delete product.user;
+        delete product.category;
+      }
+      return product;
+    });
   },
 };
