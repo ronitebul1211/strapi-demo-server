@@ -12,4 +12,9 @@ module.exports = {
     const newParams = { ...params, user: userId };
     return strapi.query("product").search(newParams, populate);
   },
+
+  sendNewProductSms(product, phone) {
+    const message = `You have successfully added a new product: ${product.title}`;
+    return strapi.config.functions.smsApi(message, phone);
+  },
 };
