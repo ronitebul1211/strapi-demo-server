@@ -12,4 +12,8 @@ module.exports = {
     const newParams = { ...params, user: userId };
     return strapi.query("product").search(newParams, populate);
   },
+
+  // findOne(params, userId, populate) {
+  //   return strapi.query("restaurant").findOne(params, populate);
+  // },
 };

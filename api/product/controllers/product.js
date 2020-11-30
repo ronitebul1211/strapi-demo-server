@@ -24,4 +24,14 @@ module.exports = {
       return resultProduct;
     });
   },
+
+  /** Find products by product id, response with data if the requested user is product owner */
+  async findOne(ctx) {
+    const { params, state } = ctx;
+    const product = await strapi.services.product.findOne({
+      id: params.id,
+      user: state.user.id,
+    });
+    return sanitizeEntity(product, { model: strapi.models.product });
+  },
 };
