@@ -5,6 +5,10 @@ const { parseMultipartData, sanitizeEntity } = require("strapi-utils");
  * sanitizeEntity: This function removes all private fields from the model and its relations.
  */
 
+/**
+ * ctx.unauthorized(`You can't update this entry`);
+ */
+
 module.exports = {
   /** Find from the products the user owned */
   async find(ctx) {
@@ -50,21 +54,20 @@ module.exports = {
   /** Create new product, define requested use as product owner, send user sms when product creates successfully */
   async create(ctx) {
     let product;
-    const user = ctx.state.user;
+    const userId = ctx.state.user.id;
+    const userPhone = ctx.state.user.phoneNumber;
+
     if (ctx.is("multipart")) {
       const { data, files } = parseMultipartData(ctx);
-      data.user = user.id;
+      data.user = userId;
       product = await strapi.services.product.create(data, { files });
     } else {
-      ctx.request.body.user = user.id;
+      ctx.request.body.user = userId;
       product = await strapi.services.product.create(ctx.request.body);
     }
 
     if (product) {
-      await strapi.services.product.sendNewProductSms(
-        product,
-        user.phoneNumber
-      );
+      await strapi.services.product.sendNewProductSms(product, userPhone);
     }
 
     return sanitizeEntity(product, { model: strapi.models.product });
