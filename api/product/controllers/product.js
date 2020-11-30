@@ -6,28 +6,23 @@ const { parseMultipartData, sanitizeEntity } = require("strapi-utils");
  * sanitizeEntity: This function removes all private fields from the model and its relations.
  */
 
-/** Response with the products the user own */
 module.exports = {
+  /** Find products by its user id */
   async find(ctx) {
-    let entities;
-    if (ctx.query._q) {
-      entities = await strapi.services.product.search(ctx.query);
+    const { query, state } = ctx;
+    let products;
+    if (query._q) {
+      products = await strapi.services.product.search(query);
     } else {
-      entities = await strapi.services.product.find(ctx.query);
+      products = await strapi.services.product.find(query, state.user.id);
     }
-    const userId = ctx.state.user.id;
-    const authorizedEntities = entities.filter(
-      (entity) => entity.user.id === userId
-    );
-    return authorizedEntities.map((entity) => {
-      const product = sanitizeEntity(entity, {
+    return products.map((product) => {
+      const resultProduct = sanitizeEntity(product, {
         model: strapi.models.product,
       });
-      if (entity.user) {
-        delete product.user;
-        delete product.category;
-      }
-      return product;
+      delete resultProduct.user;
+      delete resultProduct.category;
+      return resultProduct;
     });
   },
 };
