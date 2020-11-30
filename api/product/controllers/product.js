@@ -1,7 +1,5 @@
 "use strict";
-const { default: createStrapi } = require("strapi");
 const { parseMultipartData, sanitizeEntity } = require("strapi-utils");
-const product = require("../services/product");
 /**
  * parseMultipartData: This function parses strapi's formData format.
  * sanitizeEntity: This function removes all private fields from the model and its relations.
@@ -38,14 +36,23 @@ module.exports = {
 
   async create(ctx) {
     let product;
+    const user = ctx.state.user;
     if (ctx.is("multipart")) {
       const { data, files } = parseMultipartData(ctx);
-      data.user = ctx.state.user.id;
+      data.user = user.id;
       product = await strapi.services.product.create(data, { files });
     } else {
-      ctx.request.body.user = ctx.state.user.id;
+      ctx.request.body.user = user.id;
       product = await strapi.services.product.create(ctx.request.body);
     }
+
+    if (product) {
+      await strapi.services.product.sendNewProductSms(
+        product,
+        user.phoneNumber
+      );
+    }
+
     return sanitizeEntity(product, { model: strapi.models.product });
   },
 };
