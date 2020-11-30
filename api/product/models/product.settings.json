@@ -31,7 +31,9 @@
     "user": {
       "via": "products",
       "plugin": "users-permissions",
-      "model": "user"
+      "model": "user",
+      "required": true,
+      "autoPopulate": false
     }
   }
 }

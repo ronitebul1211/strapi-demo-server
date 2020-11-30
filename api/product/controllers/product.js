@@ -21,8 +21,6 @@ module.exports = {
       const resultProduct = sanitizeEntity(product, {
         model: strapi.models.product,
       });
-      delete resultProduct.user;
-      delete resultProduct.category;
       return resultProduct;
     });
   },
