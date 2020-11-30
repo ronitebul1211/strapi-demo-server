@@ -5,4 +5,10 @@
  * to customize this service
  */
 
-module.exports = {};
+module.exports = {
+  //Find all Products for specific user by its id
+  test(params, userId, populate) {
+    params.user = userId;
+    return strapi.query("product").find(params, populate);
+  },
+};
