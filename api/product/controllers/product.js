@@ -6,22 +6,22 @@ const { parseMultipartData, sanitizeEntity } = require("strapi-utils");
  */
 
 module.exports = {
-  /** Find / Search authorized products based on user-id, params */
+  /** Find from the products the user owned */
   async find(ctx) {
-    const { query, state } = ctx;
+    const query = ctx.query;
+    const userId = ctx.state.user.id;
     let products;
     if (query._q) {
-      products = await strapi.services.product.search(query, state.user.id);
-    } else {
-      products = await strapi.services.product.find(query, state.user.id);
-    }
-
-    return products.map((product) => {
-      const resultProduct = sanitizeEntity(product, {
-        model: strapi.models.product,
+      products = await strapi.services.product.search({
+        ...query,
+        user: userId,
       });
-      return resultProduct;
-    });
+    } else {
+      products = await strapi.services.product.find({ ...query, user: userId });
+    }
+    return products.map((product) =>
+      sanitizeEntity(product, { model: strapi.models.product })
+    );
   },
 
   /** Find products by product id, response with data if the requested user is product owner */
