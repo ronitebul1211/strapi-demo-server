@@ -51,7 +51,7 @@ module.exports = {
     return strapi.services.product.count({ ...query, user: userId });
   },
 
-  /** Create new product, define requested use as product owner, send user sms when product creates successfully */
+  /** Create new product, define requested user as product owner, send user sms when product creates successfully */
   async create(ctx) {
     let product;
     const userId = ctx.state.user.id;
@@ -71,5 +71,30 @@ module.exports = {
     }
 
     return sanitizeEntity(product, { model: strapi.models.product });
+  },
+
+  /** Update product - allow access only to the products requested user owned */
+  async update(ctx) {
+    const productId = ctx.params.id;
+    const userId = ctx.state.user.id;
+
+    let updatedProduct;
+    if (ctx.is("multipart")) {
+      const { data, files } = parseMultipartData(ctx);
+      updatedProduct = await strapi.services.product.update(
+        { id: productId, user: userId },
+        data,
+        {
+          files,
+        }
+      );
+    } else {
+      updatedProduct = await strapi.services.product.update(
+        { id: productId, user: userId },
+        ctx.request.body
+      );
+    }
+
+    return sanitizeEntity(updatedProduct, { model: strapi.models.product });
   },
 };
