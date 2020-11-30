@@ -6,7 +6,8 @@ const { parseMultipartData, sanitizeEntity } = require("strapi-utils");
  */
 
 /**
- * ctx.unauthorized(`You can't update this entry`);
+ * we can use ->
+ * ctx.unauthorized(`Access denied`);
  */
 
 module.exports = {
@@ -96,5 +97,17 @@ module.exports = {
     }
 
     return sanitizeEntity(updatedProduct, { model: strapi.models.product });
+  },
+
+  /** Delete product - allow access only to the products requested user owned */
+  async delete(ctx) {
+    const productId = ctx.params.id;
+    const userId = ctx.state.user.id;
+
+    const deletedProduct = await strapi.services.product.delete({
+      id: productId,
+      user: userId,
+    });
+    return sanitizeEntity(deletedProduct, { model: strapi.models.product });
   },
 };
