@@ -7,15 +7,16 @@ const { parseMultipartData, sanitizeEntity } = require("strapi-utils");
  */
 
 module.exports = {
-  /** Find products by its user id */
+  /** Find / Search authorized products based on user-id, params */
   async find(ctx) {
     const { query, state } = ctx;
     let products;
     if (query._q) {
-      products = await strapi.services.product.search(query);
+      products = await strapi.services.product.search(query, state.user.id);
     } else {
       products = await strapi.services.product.find(query, state.user.id);
     }
+
     return products.map((product) => {
       const resultProduct = sanitizeEntity(product, {
         model: strapi.models.product,
