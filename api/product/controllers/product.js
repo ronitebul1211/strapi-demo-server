@@ -34,6 +34,7 @@ module.exports = {
     return sanitizeEntity(product, { model: strapi.models.product });
   },
 
+  /** Create new product, define requested use as product owner, send user sms when product creates successfully */
   async create(ctx) {
     let product;
     const user = ctx.state.user;
