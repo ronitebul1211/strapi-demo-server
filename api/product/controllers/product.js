@@ -26,12 +26,25 @@ module.exports = {
 
   /** Find products by product id, response with data if the requested user is product owner */
   async findOne(ctx) {
-    const { params, state } = ctx;
+    const productId = ctx.params.id;
+    const userId = ctx.state.user.id;
+
     const product = await strapi.services.product.findOne({
-      id: params.id,
-      user: state.user.id,
+      id: productId,
+      user: userId,
     });
     return sanitizeEntity(product, { model: strapi.models.product });
+  },
+
+  /** Count the products the user owned */
+  async count(ctx) {
+    const query = ctx.query;
+    const userId = ctx.state.user.id;
+
+    if (query._q) {
+      return strapi.services.product.countSearch({ ...query, user: userId });
+    }
+    return strapi.services.product.count({ ...query, user: userId });
   },
 
   /** Create new product, define requested use as product owner, send user sms when product creates successfully */
@@ -55,16 +68,5 @@ module.exports = {
     }
 
     return sanitizeEntity(product, { model: strapi.models.product });
-  },
-
-  /** Count the products the user owned */
-  count(ctx) {
-    const query = ctx.query;
-    const userId = ctx.state.user.id;
-
-    if (query._q) {
-      return strapi.services.product.countSearch({ ...query, user: userId });
-    }
-    return strapi.services.product.count({ ...query, user: userId });
   },
 };
