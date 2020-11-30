@@ -56,4 +56,15 @@ module.exports = {
 
     return sanitizeEntity(product, { model: strapi.models.product });
   },
+
+  /** Count the products the user owned */
+  count(ctx) {
+    const query = ctx.query;
+    const userId = ctx.state.user.id;
+
+    if (query._q) {
+      return strapi.services.product.countSearch({ ...query, user: userId });
+    }
+    return strapi.services.product.count({ ...query, user: userId });
+  },
 };
