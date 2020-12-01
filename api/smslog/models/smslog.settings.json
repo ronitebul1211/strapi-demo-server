@@ -2,12 +2,13 @@
   "kind": "collectionType",
   "collectionName": "smslogs",
   "info": {
-    "name": "smslog"
+    "name": "smslog",
+    "description": ""
   },
   "options": {
     "increments": true,
     "timestamps": true,
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "attributes": {
     "date": {
@@ -16,6 +17,9 @@
     "user": {
       "plugin": "users-permissions",
       "model": "user"
+    },
+    "username": {
+      "type": "string"
     }
   }
 }
