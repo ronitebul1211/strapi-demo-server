@@ -2,48 +2,48 @@
   "routes": [
     {
       "method": "GET",
-      "path": "/sms-logs",
-      "handler": "sms-logs.find",
+      "path": "/smslogs",
+      "handler": "smslog.find",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/sms-logs/count",
-      "handler": "sms-logs.count",
+      "path": "/smslogs/count",
+      "handler": "smslog.count",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/sms-logs/:id",
-      "handler": "sms-logs.findOne",
+      "path": "/smslogs/:id",
+      "handler": "smslog.findOne",
       "config": {
         "policies": []
       }
     },
     {
       "method": "POST",
-      "path": "/sms-logs",
-      "handler": "sms-logs.create",
+      "path": "/smslogs",
+      "handler": "smslog.create",
       "config": {
         "policies": []
       }
     },
     {
       "method": "PUT",
-      "path": "/sms-logs/:id",
-      "handler": "sms-logs.update",
+      "path": "/smslogs/:id",
+      "handler": "smslog.update",
       "config": {
         "policies": []
       }
     },
     {
       "method": "DELETE",
-      "path": "/sms-logs/:id",
-      "handler": "sms-logs.delete",
+      "path": "/smslogs/:id",
+      "handler": "smslog.delete",
       "config": {
         "policies": []
       }

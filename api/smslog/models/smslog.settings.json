@@ -1,9 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "sms_logs",
+  "collectionName": "smslogs",
   "info": {
-    "name": "smsLogs",
-    "description": ""
+    "name": "smslog"
   },
   "options": {
     "increments": true,
