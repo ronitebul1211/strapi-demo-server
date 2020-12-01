@@ -1,0 +1,22 @@
+{
+  "kind": "collectionType",
+  "collectionName": "sms_logs",
+  "info": {
+    "name": "smsLogs",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "date": {
+      "type": "datetime"
+    },
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user"
+    }
+  }
+}
