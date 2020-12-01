@@ -29,12 +29,11 @@
       "max": 5
     },
     "user": {
-      "via": "products",
+      "private": true,
+      "autoPopulate": false,
       "plugin": "users-permissions",
       "model": "user",
-      "required": true,
-      "autoPopulate": false,
-      "private": true
+      "required": true
     }
   }
 }
