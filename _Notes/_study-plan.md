@@ -16,7 +16,8 @@
 ## Cron Job & Node-Schedule & Strapi
 
 <hr/>
-### What is Cron Job ?
+
+### **_What is Cron Job ?_**
 
 <hr/>
 
@@ -33,7 +34,26 @@ running system maintenance tasks and a lot more.
 
 <hr/>
 
-### Create a Cron Job on Strapi
+### **Node-Schedule**
+
+<hr/>
+Node Schedule is a flexible cron-like and not-cron-like job scheduler for Node.js.     
+  
+It allows you to schedule jobs (functions) for execution at specific dates, with optional recurrence rules.     
+**It only uses a single timer at any given time (rather than reevaluating upcoming jobs every second/minute).**  
+- its time-based scheduling, not interval-based scheduling.
+- it has has Windows support unlike true cron 
+- it is designed for **in-process scheduling**, i.e. scheduled jobs will only fire as long as your script is running,   
+and the schedule will disappear when execution completes.   
+If you need to schedule jobs that will persist even when your script isn't running, consider using actual cron.
+- Job objects are EventEmitter's, and emit a:
+  - **run event** after each execution
+  - **scheduled event** each time they're scheduled to run
+  - **canceled event** when an invocation is canceled before it's executed
+
+<hr/>
+
+### **_Create a Cron Job on Strapi_**
 
 <hr/>
 
