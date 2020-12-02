@@ -6,10 +6,12 @@ module.exports = {
     const userPhone = ctx.state.user.phoneNumber;
     const productCount = await strapi.services.product.count({ user: userId });
     await strapi.services.product.sendProductsCountSms(productCount, userPhone);
-    const israelDataTime = new Date().toLocaleString("en-US", {
-      timeZone: "Asia/Jerusalem",
-    });
-    const smsLog = { user: userId, date: new Date(israelDataTime) };
+    //TODO - No need to covert to local time, time kept om db in ISO format
+    // const israelDataTimeString = new Date().toLocaleString("en-US", {
+    //   timeZone: "Asia/Jerusalem",
+    // });
+    // const israelDataTime = new Date(israelDataTimeString)
+    const smsLog = { user: userId, date: new Date() };
     await strapi.services.smslog.create(smsLog);
     return "success";
   },
