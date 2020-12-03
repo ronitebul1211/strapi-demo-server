@@ -12,6 +12,7 @@
   "devDependencies": {},
   "dependencies": {
     "axios": "^0.21.0",
+    "date-fns": "^2.16.1",
     "knex": "<0.20.0",
     "sqlite3": "latest",
     "strapi": "3.3.4",
