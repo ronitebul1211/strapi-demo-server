@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "appointments",
+  "info": {
+    "name": "Appointment",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": false,
+    "draftAndPublish": false,
+    "populateCreatorFields": false
+  },
+  "attributes": {
+    "instructor": {
+      "plugin": "users-permissions",
+      "collection": "user",
+      "required": true
+    },
+    "date": {
+      "type": "datetime",
+      "required": true
+    },
+    "reminder": {
+      "type": "enumeration",
+      "enum": ["HALF_HOUR", "ONE_HOUR", "TWO_HOURS"],
+      "required": true
+    },
+    "reminderDate": {
+      "type": "datetime",
+      "private": true
+    },
+    "client": {
+      "plugin": "users-permissions",
+      "collection": "user",
+      "required": true
+    }
+  }
+}
