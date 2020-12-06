@@ -1,5 +1,5 @@
 "use strict";
-
+const dateFns = require("date-fns");
 /**
  * Cron config that gives you an opportunity
  * to run scheduled jobs.
@@ -11,7 +11,21 @@
  */
 
 module.exports = {
-  "*/1 * * * *": () => {
-    console.log("If i would run a service i was an async function ...");
+  "*/1 * * * * ": async () => {
+    const now = new Date();
+    now.setMilliseconds(0);
+    now.setSeconds(0);
+
+    const appointments = await strapi.services.appointment.find({
+      reminderDate: now,
+    });
+
+    if (appointments.length) {
+      for (let i = 0; i < appointments.length; i++) {
+        await strapi.services.appointment.sendAppointmentReminderSms(
+          appointments[i]
+        );
+      }
+    }
   },
 };
