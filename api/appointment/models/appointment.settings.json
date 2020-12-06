@@ -14,8 +14,7 @@
   "attributes": {
     "instructor": {
       "plugin": "users-permissions",
-      "collection": "user",
-      "required": true
+      "model": "user"
     },
     "date": {
       "type": "datetime",
@@ -32,8 +31,7 @@
     },
     "client": {
       "plugin": "users-permissions",
-      "collection": "user",
-      "required": true
+      "model": "user"
     }
   }
 }
