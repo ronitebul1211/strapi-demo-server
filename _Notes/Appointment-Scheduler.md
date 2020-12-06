@@ -49,3 +49,20 @@ remainderDate: date: 2020-12-03T10:36:00.000Z
 cron job, run every minute, get current date, set seconds and milliseconds to 0.  
 search in DB remainderDate that match current date.  
 send the list of appointment who spouse to get remainder to service that take care of it.
+
+<hr/>
+ 
+ ### Improvements
+ 
+<hr/>
+
+**Model:**
+
+- SET in the model with group / enumeration (possible ?)  
+  list of -> reminder { key: "HALF_HOUR", title: "חצי שעה", value: 30 }
+- simplified the appointment beforeCreate beforeUpdate implementation (no switch).
+
+**Cron:**
+
+- depend on data changes, instead of test every minute, test every 30 minute,  
+  sort in array by reminder time, set next cron to next reminder time
