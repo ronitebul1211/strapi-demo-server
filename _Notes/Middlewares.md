@@ -40,3 +40,5 @@ module.exports = {
 };
 
 ```
+
+message: { id: `${pluginId}.error.record.fetch` },
