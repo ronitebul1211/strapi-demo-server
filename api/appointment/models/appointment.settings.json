@@ -12,10 +12,6 @@
     "populateCreatorFields": false
   },
   "attributes": {
-    "instructor": {
-      "plugin": "users-permissions",
-      "model": "user"
-    },
     "date": {
       "type": "datetime",
       "required": true
@@ -28,6 +24,10 @@
     "reminderDate": {
       "type": "datetime",
       "private": true
+    },
+    "instructor": {
+      "plugin": "users-permissions",
+      "model": "user"
     },
     "client": {
       "plugin": "users-permissions",
