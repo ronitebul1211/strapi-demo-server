@@ -226,6 +226,7 @@ const EditViewDataManagerProvider = ({
             type: "warning",
             id,
             message: { id: `${pluginId}.error.record.fetch` },
+            message: "my",
           });
         }
 
@@ -548,7 +549,6 @@ const EditViewDataManagerProvider = ({
           });
         }
 
-        console.log(err);
         strapi.notification.toggle({
           type: "warning",
           message: { id: `${pluginId}.error.record.fetch` },
