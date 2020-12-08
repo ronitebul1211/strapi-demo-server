@@ -42,3 +42,8 @@ module.exports = {
 ```
 
 message: { id: `${pluginId}.error.record.fetch` },
+
+```
+
+\my-project\node_modules\strapi-plugin-content-manager\admin\src\containers\EditViewDataManagerProvider\index.js
+```
