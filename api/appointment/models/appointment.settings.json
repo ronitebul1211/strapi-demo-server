@@ -18,7 +18,11 @@
     },
     "reminder": {
       "type": "enumeration",
-      "enum": ["HALF_HOUR", "ONE_HOUR", "TWO_HOURS"],
+      "enum": [
+        "HALF_HOUR",
+        "ONE_HOUR",
+        "TWO_HOURS"
+      ],
       "required": true
     },
     "reminderDate": {
