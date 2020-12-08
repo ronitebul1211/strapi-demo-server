@@ -30,3 +30,9 @@ ctx.throw(405, "access_denied");
     "message": "access_denied" // Override message
 }
 ```
+
+-> status 400
+
+```
+ctx.badRequest("custom message")
+```
