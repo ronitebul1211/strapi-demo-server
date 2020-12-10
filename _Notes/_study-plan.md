@@ -8,5 +8,5 @@
    https://strapi.io/documentation/v3.x/guides/custom-admin.html#introduction  
    https://strapi.io/documentation/v3.x/admin-panel/customization.html#development-mode
 - Login with auth provider + when login client display role and user details
-- SQL - Cascading, Triggers, Duplicates
+- SQL - Cascading, Triggers, Duplicates, link tables
 - Linux tutorial
