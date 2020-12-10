@@ -1,3 +1,5 @@
+init process
+
 ```
 psql -U postgres -h localhost
 ```
