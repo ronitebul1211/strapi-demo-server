@@ -48,12 +48,17 @@ A request without a token, will assume the public role permissions by default.
 - strapi's backend is located at: strapi.website.com.
 - app frontend is located at: website.com.
 
-1. user goes on frontend app and click on connect with Github.
-2. frontend redirect the tab to the backend URL: https://backend.com/connect/github.
-3. backend redirects the tab to the GitHub login page
+1. user goes on frontend app and click on connect with Provider.
+2. frontend redirect the tab to the backend URL: https://backend.com/connect/provider
+3. backend redirects the tab to the provider login page
 4. user logs in.
-5. Once done, Github redirects the tab to the backend URL:  
-   https://strapi.website.com/connect/github/callback?code=abcdef.
+5. Provider redirects the tab to the backend URL:  
+   https://strapi.website.com/connect/provider/callback?code=abcdef.
+   Why?
+   Because this url defined in the provider as authorized uri,
+   that the users will be redirected to this path after they have authenticated with Google.
+   The path will be appended with the authorization code for access.
+
 6. backend uses the given code to get from Github an access_token.
 7. it used to make authorized requests to Github to get the user info.
 8. backend redirects the tab to the url of your choice with the param access_token  
@@ -65,3 +70,16 @@ A request without a token, will assume the public role permissions by default.
 **Under the hood**  
 the backend asks Github for the user's profile and a match is done on Github user's email and Strapi user's email
 The frontend now possesses the user's jwt, with means the user is connected and the frontend can make authenticated requests to the backend!
+
+1. user click on Login with Google
+2. frontend make an request to the backend to tell it user want login in with google provider
+
+<hr/>
+
+### **Workflow**
+
+<hr/>
+
+1. specify the absolute url of your backend in config / server.js  
+    this url will given to the provider.
+   some providers don't accept the use of localhost, in this case use proxy (DOC)
