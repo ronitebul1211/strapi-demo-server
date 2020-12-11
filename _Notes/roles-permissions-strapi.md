@@ -48,31 +48,28 @@ A request without a token, will assume the public role permissions by default.
 - strapi's backend is located at: strapi.website.com.
 - app frontend is located at: website.com.
 
-1. user goes on frontend app and click on connect with Provider.
+1. user click on connect with Provider on frontend app.
 2. frontend redirect the tab to the backend URL: https://backend.com/connect/provider
-3. backend redirects the tab to the provider login page
-4. user logs in.
-5. Provider redirects the tab to the backend URL:  
-   https://strapi.website.com/connect/provider/callback?code=abcdef.
-   Why?
-   Because this url defined in the provider as authorized uri,
-   that the users will be redirected to this path after they have authenticated with Google.
-   The path will be appended with the authorization code for access.
+3. backend create the authorization request to the provider, in query params define:
 
-6. backend uses the given code to get from Github an access_token.
-7. it used to make authorized requests to Github to get the user info.
-8. backend redirects the tab to the url of your choice with the param access_token  
-   (example: http://website.com/connect/github/redirect?access_token=eyfvg)
-9. The frontend (http://website.com/connect/github/redirect)
-   calls the backend with https://strapi.website.com/auth/github/callback?access_token=eyfvg
-10. backend returns the strapi user profile with its jwt.
+   - parameters that identify application
+   - permissions that the user will be asked to grant
+   - redirect_uri - Determines where the API server redirects the user after the user completes the authorization flow.  
+     The value must exactly match one of the authorized redirect URIs for the OAuth 2.0 client (on google panel)
 
-**Under the hood**  
-the backend asks Github for the user's profile and a match is done on Github user's email and Strapi user's email
-The frontend now possesses the user's jwt, with means the user is connected and the frontend can make authenticated requests to the backend!
-
-1. user click on Login with Google
-2. frontend make an request to the backend to tell it user want login in with google provider
+4. Redirect the user to Google's OAuth 2.0 server to initiate the authentication and authorization process.
+5. backend waits for the response from Google's OAuth 2.0 server (authorization status return in query param)
+   - Grant : https://oauth2.example.com/auth?code=4/P7q7W91a-oMsCeLvIaQm6bTrgtp7
+   - Error : https://oauth2.example.com/auth?error=access_denied
+6. authorization code, can exchange for an access token
+   server send another request to google api with -> client_id (app), client_secret, code(from latest request),
+   redirect_uri (to send response) - must to match uri define in google panel.
+   google response with access token & refresh token
+7. After backend obtains an access token, it can be used to make calls to a Google API on behalf of a given user account (email)
+8. the backend asks google for the user's profile and a match is done on Github user's email and Strapi user's email
+9. backend redirects the tab to the url of your choice (set in provider settings) with the param access_token (google)
+   (example: http://website.com/connect/google/redirect?access_token=google access token)
+   int the response body strapi token & user data sent
 
 <hr/>
 
