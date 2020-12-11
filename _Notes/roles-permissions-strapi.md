@@ -65,11 +65,12 @@ A request without a token, will assume the public role permissions by default.
    server send another request to google api with -> client_id (app), client_secret, code(from latest request),
    redirect_uri (to send response) - must to match uri define in google panel.
    google response with access token & refresh token
-7. After backend obtains an access token, it can be used to make calls to a Google API on behalf of a given user account (email)
-8. the backend asks google for the user's profile and a match is done on Github user's email and Strapi user's email
-9. backend redirects the tab to the url of your choice (set in provider settings) with the param access_token (google)
+7. backend redirects the tab to the url of your choice (set in provider settings) with the param access_token (google)
    (example: http://website.com/connect/google/redirect?access_token=google access token)
-   int the response body strapi token & user data sent
+8. now to authenticate user, frontend make an request to backend to -> /auth/providerName/callback?id_token=google token.....
+9. backend obtains an access token, it can be used to make calls to a Google API on behalf of a given user account (email)
+10. the backend asks google for the user's profile and a match is done on Github user's email and Strapi user's email
+11. backend response with strapi token & user data sent
 
 <hr/>
 
